@@ -50,11 +50,12 @@ func OneWorkerReader(channels ...<-chan int) <-chan int {
 }
 
 func main() {
+	// Создаем воркеров, которое что-то вычисляют и возвращают каналы
 	oneChannel := SomeChannel(1, 2, 3, 4, 5)
 	twoChannel := SomeChannel(100, 200)
 	threeChannel := SomeChannel(1000, 2000)
 
-	// Передаем в функцию наши каналы и печатаем результат из одного канала
+	// Передаем в функцию каналы наших воркеров и печатаем результат из одного канала
 	for n := range OneWorkerReader(oneChannel, twoChannel, threeChannel) {
 		fmt.Println(n)
 	}
