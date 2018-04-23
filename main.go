@@ -26,7 +26,7 @@ func SomeChannel(nums ...int) <-chan int {
 
 // Функция чтения с каналов
 // На вход получаем каналы, и отдает в один канал подсчитанные данные
-func ReadFromChannels(channels ...<-chan int) <-chan int {
+func OneWorkerReader(channels ...<-chan int) <-chan int {
 	var vg sync.WaitGroup
 	vg.Add(len(channels))
 	outChannel := make(chan int)
@@ -55,7 +55,7 @@ func main() {
 	threeChannel := SomeChannel(1000, 2000)
 
 	// Передаем в функцию наши каналы и печатаем результат из одного канала
-	for n := range ReadFromChannels(oneChannel, twoChannel, threeChannel) {
+	for n := range OneWorkerReader(oneChannel, twoChannel, threeChannel) {
 		fmt.Println(n)
 	}
 }
